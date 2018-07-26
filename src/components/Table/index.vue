@@ -9,7 +9,7 @@
       <template slot="items" slot-scope="props">
         <td>{{ props.item.id }}</td>
         <td>{{ props.item.name }}</td>
-        <td>{{ props.item.desc }}</td>
+        <td>{{ props.item.desc | preview }}</td>
         <td>
           <v-icon
             color="primary"
@@ -127,6 +127,14 @@
           modal: false,
           id: null
         }
+      }
+    },
+    filters: {
+      preview (value) {
+        if (!value) return ''
+        return value.length > 50
+          ? `${value.slice(0, 50)}...`
+          : value
       }
     }
   }
