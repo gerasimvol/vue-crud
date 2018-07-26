@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <v-app>
-      <router-view />
+      <div class="content">
+        <router-view />
+      </div>
     </v-app>
   </div>
 </template>
@@ -11,3 +13,9 @@
     name: 'App'
   }
 </script>
+
+<style lang="scss" scoped>
+  .content {
+    padding: 10px;
+  }
+</style>
