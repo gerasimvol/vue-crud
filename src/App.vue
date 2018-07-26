@@ -22,6 +22,16 @@
 <style lang="scss" scoped>
   .content {
     padding: 10px;
+
+    @media screen and (max-width: 485px) {
+      padding: 0;
+
+      /deep/ th,
+      /deep/ td {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+      }
+    }
   }
 
   .fade {

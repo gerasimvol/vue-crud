@@ -131,9 +131,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .controls {
-    margin-top: 5px;
-  }
-</style>
