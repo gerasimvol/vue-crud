@@ -8,10 +8,16 @@
       <v-text-field
         v-model="item.name"
         label="Name"
+        :error-messages="getErrors('name')"
+        @input="$v.item.name.$touch()"
+        @blur="$v.item.name.$touch()"
       />
       <v-textarea
         label="Description"
         v-model="item.desc"
+        :error-messages="getErrors('desc')"
+        @input="$v.item.desc.$touch()"
+        @blur="$v.item.desc.$touch()"
       />
     </v-card-text>
 
@@ -33,10 +39,13 @@
 </template>
 
 <script>
+  import { validationMixin } from 'vuelidate'
   import { mapGetters, mapActions } from 'vuex'
+  import { required } from 'vuelidate/lib/validators'
 
   export default {
     name: 'Item',
+    mixins: [validationMixin],
     data () {
       return {
         item: {
@@ -44,6 +53,13 @@
           name: '',
           desc: ''
         }
+      }
+    },
+    validations: {
+      item: {
+        id: { required },
+        name: { required },
+        desc: { required }
       }
     },
     computed: {
@@ -74,9 +90,15 @@
       initItem () {
         if (this.mode === 'edit') {
           this.item = this.getItemById(this.$route.params.id)
+        } else {
+          const uniqueId = new Date().getTime()
+          this.item.id = uniqueId
         }
       },
       onSubmit () {
+        this.$v.$touch()
+        if (this.$v.$invalid) return
+
         const submitAction = this.mode === 'edit'
           ? this.updateItem
           : this.createItem
@@ -84,6 +106,12 @@
       },
       onCancel () {
         this.$router.push({ name: 'home' })
+      },
+      getErrors (field) {
+        const errors = []
+        if (!this.$v.item[field].$dirty) return errors
+        !this.$v.item[field].required && errors.push('This field is required.')
+        return errors
       }
     },
     created () {
