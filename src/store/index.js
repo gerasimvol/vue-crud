@@ -30,8 +30,8 @@ const actions = {
     commit(types.UPDATE_ITEMS_LIST, updatedItemsList)
   },
 
-  deleteItem ({ state, commit }, deletableItem) {
-    const updatedItemsList = state.itemsList.filter(item => item.id !== deletableItem)
+  deleteItem ({ state, commit }, deletableItemId) {
+    const updatedItemsList = state.itemsList.filter(item => item.id !== deletableItemId)
     commit(types.UPDATE_ITEMS_LIST, updatedItemsList)
   }
 }

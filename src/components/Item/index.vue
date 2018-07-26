@@ -89,10 +89,10 @@
       ]),
       initItem () {
         if (this.mode === 'edit') {
-          this.item = this.getItemById(this.$route.params.id)
+          this.item = { ...this.getItemById(this.$route.params.id) }
         } else {
-          const uniqueId = new Date().getTime()
-          this.item.id = uniqueId
+          const pseudoUniqueId = Math.random().toString(36).substr(2, 16)
+          this.item.id = pseudoUniqueId
         }
       },
       onSubmit () {
@@ -103,6 +103,7 @@
           ? this.updateItem
           : this.createItem
         submitAction(this.item)
+        this.$router.push({ name: 'home' })
       },
       onCancel () {
         this.$router.push({ name: 'home' })
@@ -122,6 +123,7 @@
 
 <style lang="scss" scoped>
   .item {
+    min-width: 100%;
     padding: 10px;
   }
 </style>
